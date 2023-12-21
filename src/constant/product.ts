@@ -1,0 +1,5 @@
+export const GETALLPRODUCTS = "GET-ALL-PRODUCTS";
+
+export const GETALLCAROUSEL = "GET-ALL-CAROUSEL";
+
+export type ProductTypes = "GET-ALL-PRODUCTS" | "GET-ALL-CAROUSEL";
