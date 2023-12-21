@@ -8,6 +8,7 @@ import LoginPage from "../views/loginPage";
 import NotFoundPage from "../views/notFound";
 import NavigationBar from "../components/navbar/navigationBar";
 import Home from "../views/home";
+import ProductDetail from "../views/productDetail";
 
 export default createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export default createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path:'/product/:id',
+        element:<ProductDetail />
+      }
     ],
   },
   {
