@@ -35,6 +35,7 @@ export default function NavigationBar() {
           <MDBCollapse navbar hidden={showNavSecond}>
             <MDBNavbarNav>
               <Link to="/">Home</Link>
+              <Link to="/cart">My Cart</Link>
               <Button onClick={logout} size="sm">
                 Log out
               </Button>

@@ -1,12 +1,21 @@
 import type {
+  Bank,
   CarrouselWithProduct,
+  CheckoutPayload,
+  PaymentType,
   ProductAttributesWithImages,
 } from "../interfaces/product";
 import type { BaseQuery } from "../interfaces/request";
 import request from "../lib/axios";
 import type { ThunkAction } from "redux-thunk";
 import { type ProductAction, type ProductState } from "../reducers/product";
-import { GETALLCAROUSEL, GETALLPRODUCTS } from "../constant/product";
+import {
+  CHECKOUTWITHVA,
+  GETALLCAROUSEL,
+  GETALLPRODUCTS,
+} from "../constant/product";
+import { HTTPPOST } from "../constant";
+import { ChargeResp } from "../interfaces";
 
 export const getAllProduct =
   ({
@@ -85,3 +94,45 @@ export const getProductById = async (
   if (status !== 200) throw { message };
   return data;
 };
+
+export const checkoutProduct =
+  (
+    payload: CheckoutPayload[],
+    paymentType: PaymentType,
+    bank?: Bank
+  ): ThunkAction<
+    Promise<ChargeResp>,
+    ProductState,
+    ChargeResp,
+    ProductAction
+  > =>
+  (dispatch) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const {
+          data: { message, data },
+          status,
+        } = await request.Mutation<ChargeResp>({
+          url: `/product/${paymentType}`,
+          method: HTTPPOST,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            items: payload,
+            bank,
+          },
+        });
+
+        if (status !== 201) throw { message };
+
+        dispatch<any>({
+          type: CHECKOUTWITHVA,
+          payload: data,
+        });
+
+        resolve(data as ChargeResp);
+      } catch (err) {
+        reject(err);
+      }
+    });

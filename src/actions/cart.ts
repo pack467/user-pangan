@@ -2,7 +2,7 @@ import { type ThunkAction } from "redux-thunk";
 import { type CartAction, type CartState } from "../reducers/cart";
 import request from "../lib/axios";
 import { HTTPPOST } from "../constant";
-import type { CartAttributes } from "../interfaces/cart";
+import type { CartAttributes, CartWithProduct } from "../interfaces/cart";
 import { ADDCARTS } from "../constant/cart";
 
 export const addToCart =
@@ -26,3 +26,24 @@ export const addToCart =
       payload: data,
     });
   };
+
+export const getCart = (): Promise<CartWithProduct[]> =>
+  new Promise(async (resolve) => {
+    try {
+      const {
+        data: { message, data },
+        status,
+      } = await request.Query<CartWithProduct[]>({
+        url: "/cart/",
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+      });
+
+      if (status !== 200) throw { message };
+
+      resolve(data as CartWithProduct[]);
+    } catch (err) {
+      resolve([] as CartWithProduct[])
+    }
+  });

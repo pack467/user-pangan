@@ -1,18 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import SlideShow from "../components/card/slider";
 import type { ProductAttributesWithImages } from "../interfaces/product";
 import type { ProductImgAttributes } from "../interfaces/productImg";
 import { getProductById } from "../actions/product";
 import { swalError } from "../lib/swal";
 import LoadingWrapper from "../components/loaders/loadingOverlay";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import ImgCarousel from "../components/card/imgSlider";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<ProductAttributesWithImages>({
@@ -27,10 +25,13 @@ export default function ProductDetail() {
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         setData(await getProductById(id as string));
       } catch (err) {
         swalError((err as Error)?.message || "Internal Server error");
         navigate("/");
+      } finally {
+        setLoading(false);
       }
     })();
   }, [id, navigate]);
@@ -40,11 +41,7 @@ export default function ProductDetail() {
       <Card className="mb-2">
         {!!(data as ProductAttributesWithImages).ProductImgs?.length ? (
           (data as ProductAttributesWithImages).ProductImgs?.length > 1 ? (
-            <SlideShow
-              images={
-                data?.ProductImgs.map(({ imageUrl }) => imageUrl) as string[]
-              }
-            />
+            <ImgCarousel product={data} />
           ) : (
             <Card.Img
               variant="top"

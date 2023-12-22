@@ -48,3 +48,12 @@ export interface AddCarouselInput {
 export type CarrouselWithProduct = CarouselAttributes & {
   Product: ProductAttributesWithImages;
 };
+
+export interface CheckoutPayload {
+  itemId: string;
+  total: number;
+}
+
+export type PaymentType = "va" | "wallet";
+
+export type Bank = "BCA" | "BNI" | "PERMATA" | "BRI";

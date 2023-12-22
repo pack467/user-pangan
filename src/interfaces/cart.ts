@@ -1,3 +1,5 @@
+import type { ProductAttributesWithImages } from "./product";
+
 export interface CartAttributes {
   productId: string;
   userId: string;
@@ -5,3 +7,7 @@ export interface CartAttributes {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type CartWithProduct = {
+  Product: ProductAttributesWithImages;
+} & CartAttributes;

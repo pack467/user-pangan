@@ -2,4 +2,12 @@ export const GETALLPRODUCTS = "GET-ALL-PRODUCTS";
 
 export const GETALLCAROUSEL = "GET-ALL-CAROUSEL";
 
-export type ProductTypes = "GET-ALL-PRODUCTS" | "GET-ALL-CAROUSEL";
+export const CHECKOUTWITHVA = "CHECKOUT-BY-VA";
+
+export const SUCCESSCHECKOUTWITHVA = "SUCCESS-CHECKOUT-BY-VA";
+
+export type ProductTypes =
+  | "GET-ALL-PRODUCTS"
+  | "GET-ALL-CAROUSEL"
+  | "CHECKOUT-BY-VA"
+  | "SUCCESS-CHECKOUT-BY-VA";

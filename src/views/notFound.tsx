@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { NOTFOUNDIMG } from "../constant";
 import "../styles/views/notFound.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function NotFoundPage() {
   const navigate = useNavigate();
@@ -16,7 +17,12 @@ export default function NotFoundPage() {
         </p>
       </div>
       <div className="image-container">
-        <img src={NOTFOUNDIMG} alt="404 Not Found" className="image" />
+        <LazyLoadImage
+          src={NOTFOUNDIMG}
+          alt="404 Not Found"
+          className="image"
+          loading="lazy"
+        />
       </div>
     </main>
   );

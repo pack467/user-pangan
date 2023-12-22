@@ -20,12 +20,7 @@ export default function Home() {
   return (
     <Container fluid>
       <Row>
-        {!!carrousels.length &&
-          carrousels.map((carrousel) => (
-            <Col key={carrousel.imageId}>
-              <CarouselCard carrousel={carrousel} />
-            </Col>
-          ))}
+        {!!carrousels.length && <CarouselCard carrousels={carrousels} />}
       </Row>
       <Row>
         {!!products.length &&

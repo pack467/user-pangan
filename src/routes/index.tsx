@@ -9,6 +9,8 @@ import NotFoundPage from "../views/notFound";
 import NavigationBar from "../components/navbar/navigationBar";
 import Home from "../views/home";
 import ProductDetail from "../views/productDetail";
+import CartPage from "../views/cart";
+import PaymentPage from "../views/payment";
 
 export default createBrowserRouter([
   {
@@ -40,9 +42,17 @@ export default createBrowserRouter([
         element: <Home />,
       },
       {
-        path:'/product/:id',
-        element:<ProductDetail />
-      }
+        path: "/product/payment",
+        element: <PaymentPage />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
     ],
   },
   {

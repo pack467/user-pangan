@@ -6,3 +6,10 @@ export const swalError = (err: any) => {
     text: err,
   });
 };
+
+export const swalSuccess = (text: string) => {
+  Swal.fire({
+    icon: "success",
+    text,
+  });
+};
