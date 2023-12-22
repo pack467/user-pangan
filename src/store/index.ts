@@ -12,16 +12,20 @@ import productReducer, {
 import type { ProductAttributesWithImages } from "../interfaces/product";
 import cartReducer, { CartAction, type CartState } from "../reducers/cart";
 import type { CartAttributes } from "../interfaces/cart";
+import userReducer, { type UserAction, type UserState } from "../reducers/user";
 
 export type RootReducer = {
   productReducer: ProductState;
-  cartReducer:CartState
+  cartReducer: CartState;
+  userReducer: UserState;
 };
 
 const reducer: Reducer<
   RootReducer,
-  ProductAction<ProductAttributesWithImages> & CartAction<CartAttributes>,
+  ProductAction<ProductAttributesWithImages> &
+    CartAction<CartAttributes> &
+    UserAction<any>,
   any
-> = combineReducers({ productReducer ,cartReducer});
+> = combineReducers({ productReducer, cartReducer, userReducer });
 
 export default createStore(reducer, applyMiddleware(thunk));

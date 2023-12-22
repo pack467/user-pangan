@@ -29,7 +29,7 @@ export default function Cart({ cart, setItems }: CartProps) {
   };
 
   return (
-    <Card className="mb-2">
+    <Card className="mb-2" style={{color:'white'}}>
       <Card.Img variant="top" src={product.ProductImgs[0].imageUrl} />
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>

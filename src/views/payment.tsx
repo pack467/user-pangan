@@ -49,7 +49,7 @@ export default function PaymentPage() {
 
   return (
     <Card className="text-center" style={{ color: "white" }}>
-      <Card.Header>Finish Your Payment</Card.Header>
+      <Card.Header style={{ color: "black" }}>Finish Your Payment</Card.Header>
       <Card.Body>
         <Card.Title>{payment?.va_numbers[0].bank.toUpperCase()}</Card.Title>
         <Card.Text>{payment?.va_numbers[0].va_number}</Card.Text>
