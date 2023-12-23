@@ -11,6 +11,7 @@ import Home from "../views/home";
 import ProductDetail from "../views/productDetail";
 import CartPage from "../views/cart";
 import PaymentPage from "../views/payment";
+import WalletPage from "../views/wallet";
 
 export default createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export default createBrowserRouter([
         path: "/cart",
         element: <CartPage />,
       },
+      {
+        path:'/wallet',
+        element:<WalletPage/>
+      }
     ],
   },
   {

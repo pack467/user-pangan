@@ -36,6 +36,7 @@ export default function NavigationBar() {
             <MDBNavbarNav>
               <Link to="/">Home</Link>
               <Link to="/cart">My Cart</Link>
+              <Link to="/wallet">My Wallet</Link>
               <Button onClick={logout} size="sm">
                 Log out
               </Button>
