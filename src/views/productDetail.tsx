@@ -124,7 +124,7 @@ export default function ProductDetail() {
             {open ? "Checkout ?" : "Close"}
           </Button>
           {open && (
-            <Form>
+            <Form onSubmit={onSubmit}>
               <Container>
                 <Row>
                   <SelectPayment
