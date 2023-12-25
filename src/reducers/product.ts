@@ -5,6 +5,7 @@ import {
   GETALLPRODUCTS,
   SUCCESSCHECKOUTWITHVA,
   type ProductTypes,
+  UPDATETRANSACTIONSTATUS,
 } from "../constant/product";
 import type {
   CarrouselWithProduct,
@@ -53,6 +54,11 @@ const reducer: Reducer<ProductState, ProductAction> = (
       return {
         ...state,
         payment: null,
+      };
+    case UPDATETRANSACTIONSTATUS:
+      return {
+        ...state,
+        payment: { ...state.payment, transaction_status: payload },
       };
     default:
       return state;

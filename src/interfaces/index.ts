@@ -17,12 +17,14 @@ export interface ChargeResp {
   transaction_id: string;
   transaction_status: TransactionStatus;
   status_message: string;
-  va_numbers: {
-    bank: string;
-    va_number: string;
-  }[];
+  va_numbers: va_number[];
   expiry_time: string;
 }
+
+export type va_number = {
+  bank: string;
+  va_number: string;
+};
 
 export type TransactionStatus =
   | "authorize"

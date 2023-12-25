@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import EmailForm from "../components/form/emailForm";
 import PasswordForm from "../components/form/passwordForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { swalError } from "../lib/swal";
 import LoadingWrapper from "../components/loaders/loadingOverlay";
 import { loginHandler } from "../actions/user";
@@ -33,14 +33,17 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
-    loginHandler(data).then((val) => {
+    loginHandler(data)
+      .then((val) => {
         localStorage.setItem("access_token", val);
         navigate("/");
-    }).catch((err:Error) => {
-        swalError(err?.message || 'Internal Server Error')
-    }).finally(() => {
-        setLoading(false)
-    })
+      })
+      .catch((err: Error) => {
+        swalError(err?.message || "Internal Server Error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -67,6 +70,9 @@ export default function LoginPage() {
             Login
           </Button>
         </Form>
+        <Link to="/register">
+          <span>Not Have Account?register</span>
+        </Link>
       </Container>
     </LoadingWrapper>
   );

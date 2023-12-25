@@ -13,9 +13,11 @@ import {
   CHECKOUTWITHVA,
   GETALLCAROUSEL,
   GETALLPRODUCTS,
+  UPDATETRANSACTIONSTATUS,
 } from "../constant/product";
 import { HTTPPOST } from "../constant";
-import { ChargeResp } from "../interfaces";
+import type { ChargeResp } from "../interfaces";
+import type { TransactionAttributes } from "../interfaces/transaction";
 
 export const getAllProduct =
   ({
@@ -136,3 +138,25 @@ export const checkoutProduct =
         reject(err);
       }
     });
+
+export const getTransactionStatus =
+  (
+    signature: string
+  ): ThunkAction<Promise<void>, ProductState, ChargeResp, ProductAction> =>
+  async (dispatch) => {
+    const {
+      data: { data },
+      status,
+    } = await request.Query<TransactionAttributes>({
+      url: `/transaction/process/${signature}`,
+      headers: {
+        access_token: localStorage.getItem("access_token"),
+      },
+    });
+
+    if (status === 200)
+      dispatch<any>({
+        type: UPDATETRANSACTIONSTATUS,
+        payload: data.status,
+      });
+  };

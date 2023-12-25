@@ -1,21 +1,30 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { type RootReducer } from "../store";
 import { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import type { Timer } from "../interfaces";
+import type { ChargeResp, Timer, va_number } from "../interfaces";
 import { swalError } from "../lib/swal";
+import { getTransactionStatus } from "../actions/product";
 
 export default function PaymentPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { payment } = useSelector(
     ({ productReducer }: RootReducer) => productReducer
   );
 
+  const [data, setData] = useState<ChargeResp>({
+    va_numbers: [{ bank: "", va_number: "" }] as va_number[],
+    transaction_status: "pending",
+    order_id: "",
+    expiry_time: new Date().toISOString(),
+  } as ChargeResp);
+
   const calculateTimeLeft = () => {
     const now = new Date().getTime();
-    const expirationTime = new Date(payment?.expiry_time || "").getTime();
+    const expirationTime = new Date(data?.expiry_time || "").getTime();
     const difference = expirationTime - now;
 
     if (difference <= 0) {
@@ -37,6 +46,11 @@ export default function PaymentPage() {
 
   useEffect(() => {
     if (!payment || !payment.va_numbers.length) navigate("/");
+    dispatch<any>(getTransactionStatus(payment?.signature_key || "-")).then(
+      () => {
+        setData(payment as ChargeResp);
+      }
+    );
   }, [payment]);
 
   useEffect(() => {
@@ -45,14 +59,15 @@ export default function PaymentPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [payment?.expiry_time]);
+  }, [data?.expiry_time]);
 
   return (
     <Card className="text-center" style={{ color: "white" }}>
       <Card.Header style={{ color: "black" }}>Finish Your Payment</Card.Header>
       <Card.Body>
-        <Card.Title>{payment?.va_numbers[0].bank.toUpperCase()}</Card.Title>
-        <Card.Text>{payment?.va_numbers[0].va_number}</Card.Text>
+        <Card.Title>{data?.va_numbers[0].bank.toUpperCase()}</Card.Title>
+        <Card.Text>{data?.transaction_status}</Card.Text>
+        <Card.Text>{data?.va_numbers[0].va_number}</Card.Text>
         <Card.Text>{`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}</Card.Text>
         <Button
           variant="primary"
@@ -61,7 +76,7 @@ export default function PaymentPage() {
           Back
         </Button>
       </Card.Body>
-      <Button variant="primary">{payment?.order_id}</Button>
+      <Button variant="primary">{data?.order_id}</Button>
     </Card>
   );
 }
