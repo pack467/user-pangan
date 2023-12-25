@@ -2,6 +2,8 @@ import type { CartWithProduct } from "../../interfaces/cart";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { CheckoutPayload } from "../../interfaces/product";
+import BtnDecrement from "../button/decrement";
+import BtnIncrement from "../button/increment";
 
 export interface CartProps {
   cart: CartWithProduct;
@@ -47,21 +49,14 @@ export default function Cart({ cart, setItems }: CartProps) {
             </Col>
           </Row>
           <Row>
-            <Button
-              onClick={decrement}
-              type="button"
-              className="btn btn-danger">
-              {" - "}
-            </Button>
+            <BtnDecrement onClick={decrement}/>
             <Button
               onClick={addItems}
               type="button"
               className="btn btn-primary">
               Add Items
             </Button>
-            <Button onClick={increment} type="button" className="btn btn-light">
-              {" + "}
-            </Button>
+            <BtnIncrement onClick={increment}/>
           </Row>
           {totalPrice}
         </Container>

@@ -11,3 +11,5 @@ export const HTTPDELETE = "DELETE";
 export const NOTFOUNDIMG = "/images/404.png";
 
 export const NOIMAGES = "/images/no-image.png";
+
+export const bankList = ["BCA", "BNI", "PERMATA", "BRI"];

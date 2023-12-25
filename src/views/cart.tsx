@@ -10,6 +10,9 @@ import LoadingWrapper from "../components/loaders/loadingOverlay";
 import { checkoutProduct } from "../actions/product";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SelectPayment from "../components/form/formSelectPayment";
+import { bankList } from "../constant";
+import SelectBank from "../components/form/formSelectBank";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -19,7 +22,6 @@ export default function CartPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [paymentType, setPaymentType] = useState<PaymentType | "">("");
   const [bank, setBank] = useState<Bank | "">("");
-  const bankList = ["BCA", "BNI", "PERMATA", "BRI"];
 
   useEffect(() => {
     setLoading(true);
@@ -53,11 +55,13 @@ export default function CartPage() {
     }
     setLoading(true);
 
-    dispatch<any>(checkoutProduct(items, paymentType as PaymentType, bank as Bank))
+    dispatch<any>(
+      checkoutProduct(items, paymentType as PaymentType, bank as Bank)
+    )
       .then(() => {
         setLoading(false);
         swalSuccess("success");
-        navigate('/product/payment')
+        navigate("/product/payment");
       })
       .catch((err: Error) => {
         swalError(err?.message || "Internal Server Error");
@@ -86,40 +90,23 @@ export default function CartPage() {
           )}
         </Row>
         <Form onSubmit={onSubmit}>
-          <FormSelect
+          <SelectPayment
             required
             name="paymentType"
             id="paymentType"
-            size="lg"
             value={paymentType}
-            className="mb-4"
-            onChange={(e) => setPaymentType(e.target.value as PaymentType)}>
-            <option disabled value="">
-              -- Select payment type --
-            </option>
-            {["va", "wallet"].map((el, idx) => (
-              <option key={idx} value={el}>
-                {el}
-              </option>
-            ))}
-          </FormSelect>
+            onChangeHandler={(e) =>
+              setPaymentType(e.target.value as PaymentType)
+            }
+          />
           {paymentType === "va" && (
-            <FormSelect
+            <SelectBank
               required
               name="bank"
               id="bank"
               value={bank}
-              className="mb-4"
-              onChange={(e) => setBank(e.target.value as Bank)}>
-              <option disabled value="">
-                -- Select bank --
-              </option>
-              {bankList.map((el, idx) => (
-                <option key={idx} value={el}>
-                  {el}
-                </option>
-              ))}
-            </FormSelect>
+              onChangeHandler={(e) => setBank(e.target.value as Bank)}
+            />
           )}
           <Row style={{ justifyContent: "space-around" }}>
             <Col md="6" sm="6" lg="6">
