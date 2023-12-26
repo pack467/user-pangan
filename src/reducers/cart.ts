@@ -1,6 +1,6 @@
 import { type Reducer } from "redux";
 import type { CartAttributes } from "../interfaces/cart";
-import { ADDCARTS, type CartTypes } from "../constant/cart";
+import { ADDCARTS, DELETECART, type CartTypes } from "../constant/cart";
 
 export interface CartState {
   carts: CartAttributes[];
@@ -23,9 +23,14 @@ const reducer: Reducer<CartState, CartAction> = (
         ...state,
         carts: [...state.carts, payload],
       };
+    case DELETECART:
+      return {
+        ...state,
+        carts: state.carts.filter((el) => el.productId !== payload),
+      };
     default:
       return state;
   }
 };
 
-export default reducer
+export default reducer;

@@ -89,6 +89,7 @@ export default function CartPage() {
             ))
           )}
         </Row>
+        <Row>
         <Form onSubmit={onSubmit}>
           <SelectPayment
             required
@@ -118,6 +119,7 @@ export default function CartPage() {
           </Row>
           <Button type="submit">Purchase</Button>
         </Form>
+        </Row>
       </Container>
     </LoadingWrapper>
   );
